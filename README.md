@@ -1,10 +1,11 @@
 # FastMCP Project Template
 
-[![CI](https://github.com/ahcodedev/python-project-template/actions/workflows/python.yml/badge.svg?branch=main)](https://github.com/ahcodedev/python-project-template/actions/workflows/python.yml)
-[![Security](https://github.com/ahcodedev/python-project-template/actions/workflows/security.yml/badge.svg?branch=main)](https://github.com/ahcodedev/python-project-template/actions/workflows/security.yml)
-[![gitleaks](https://img.shields.io/badge/protected%20by-gitleaks-blue)](https://github.com/gitleaks/gitleaks)
+[![CI](https://github.com/ahcodedev/fastmcp-template/actions/workflows/python.yml/badge.svg?branch=main)](https://github.com/ahcodedev/fastmcp-template/actions/workflows/python.yml)
+[![Security](https://github.com/ahcodedev/fastmcp-template/actions/workflows/security.yml/badge.svg?branch=main)](https://github.com/ahcodedev/fastmcp-template/actions/workflows/security.yml)
+[![betterleaks](https://img.shields.io/badge/protected%20by-betterleaks-blue)](https://github.com/betterleaks/betterleaks)
+[![zizmor](https://img.shields.io/badge/%F0%9F%8C%88-zizmor-white?labelColor=white)](https://zizmor.sh/)
 
-Baseline Python project template
+FastMCP project template
 
 ## Setup
 
@@ -12,7 +13,7 @@ Project supports local development and VSCode Dev container development
 
 ### Local Development Installation
 
-Note: Project uses `uv` (0.13.x, enforced by `required-version` in `pyproject.toml`) and `just` to
+Note: Project uses `uv` and `just` to
 manage project configuration and commands
 
 * Install tools and sync the project - `just setup` (runs `brew bundle install`, then `just sync`)
@@ -25,30 +26,38 @@ manage project configuration and commands
 * Install recommended extensions
 * Reopen in container using Remote Development Container menu
 
-The base image, `just`, and `uv` are pinned by version and digest in `.devcontainer/Dockerfile`
-and updated by Dependabot. To change the Python version, edit the `FROM` line.
-
 ## Project Commands
 
 * `just setup` - install Homebrew tools from the `Brewfile` and sync the project
 * `just sync` - sync project dependencies (all groups)
-* `just lint` - type check, lint, format, and spellcheck project files (applies fixes)
-* `just ci-lint` - run the same checks without modifying files (used in CI)
+* `just lint` - type check, lint, format, spell check (typos), and lint workflows (actionlint), YAML (yamllint),
+  and JSON (jq) (applies fixes)
+* `just ci-lint` - run the same checks without modifying files, except spell check (used in CI)
+* `just spellcheck` - check spelling with typos
 * `just test` - run unit tests
+* `just coverage` - run unit tests with coverage (fails under 98%)
+* `just audit` - check dependencies for known vulnerabilities with pip-audit
+* `just markdownlint` - lint Markdown files with markdownlint-cli2
+* `just docs-build` - build the docs site with Zensical (strict mode, output in `site/`)
+* `just run` - run the MCP server
+* `just dev` - run the server with the MCP Inspector (requires Node / `npx`)
+* `just docs-serve` - serve the docs locally with live reload
 * `just prek` - run pre-commit hooks via prek
-* `just git-leaks` - scan staged changes for secrets with gitleaks
+* `just betterleaks` - scan staged changes for secrets with betterleaks
 * `just zizmor` - audit GitHub Actions workflows for security issues
-* `just set-github-labels` - create or update the release labels on GitHub (requires `gh auth login`)
+* `just set-github-labels` - remove GitHub's non-release default labels, then create or update the release labels
+  (for fresh repos, requires `gh auth login`)
+* `just update-template` - pull in the latest changes from the Copier template
 * `uv add {package}` - install a dependency
 
 ## CI and Security
 
-| Workflow                                          | Runs on                      | Purpose                                        |
-| ------------------------------------------------- | ---------------------------- | ---------------------------------------------- |
-| `python.yml`                                      | push / PR to `main`          | lint and unit tests                            |
-| `security.yml`                                    | push to `main`, all PRs      | zizmor workflow audit, gitleaks secret scan    |
-| `release-drafter.yml`                             | push to `main`, PRs          | update the draft release, label PRs            |
-| `release.yml`                                     | manual                       | publish a release                              |
+| Workflow              | Runs on                 | Purpose                                                 |
+| --------------------- | ----------------------- | ------------------------------------------------------- |
+| `python.yml`          | push / PR to `main`     | lint, spell check, unit tests, docs build, markdownlint |
+| `security.yml`        | push to `main`, all PRs | zizmor, betterleaks, pip-audit dependency audit         |
+| `release-drafter.yml` | push to `main`, PRs     | update the draft release, label PRs                     |
+| `release.yml`         | manual                  | publish a release                                       |
 
 * GitHub Actions are pinned to full commit SHAs, with the version in a trailing comment
 * Dependabot (`.github/dependabot.yml`) checks weekly for updates to GitHub Actions, Python
@@ -63,7 +72,7 @@ which reads the **release labels** on merged pull requests.
 A release label is a GitHub label added to the pull request itself, from the **Labels** section
 of the PR sidebar. Release Drafter only reads these labels. Commit messages and PR titles are not
 parsed, so prefixes like `feat:` or `fix:` have no effect. Only the labels below count as release
-labels; other repository labels (e.g. `good first issue`, `question`) are ignored.
+labels; any other repository labels you add are ignored.
 
 | Release label                                                     | Version bump | Release notes section |
 | ----------------------------------------------------------------- | ------------ | --------------------- |
@@ -80,23 +89,7 @@ labels; other repository labels (e.g. `good first issue`, `question`) are ignore
 * Run `just set-github-labels` once to create the release labels in the GitHub repository
 * Merging to `main` updates a draft GitHub Release with the next version and notes
 * To release, run the **Release** workflow from the Actions tab. It bumps the version in
-  `pyproject.toml`/`uv.lock`, updates `CHANGELOG.md`, tags the release, and uploads build artifacts
-
-## MCP Platforms
-
-Directories, marketplaces, and registries where MCP servers are listed or published.
-
-| Platform                                                                    | Description                                                         |
-| --------------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| [Official MCP Registry](https://registry.modelcontextprotocol.io)           | Official registry for discovering and publishing MCP servers        |
-| [MCP Servers (GitHub)](https://github.com/modelcontextprotocol/servers)     | Reference servers plus links to community-built servers             |
-| [Smithery](https://smithery.ai)                                             | Catalog of MCP servers with managed authentication and credentials  |
-| [Glama](https://glama.ai/mcp/servers)                                       | Large registry of open-source MCP servers, clients, and connectors  |
-| [mcp.so](https://mcp.so)                                                    | Directory of MCP servers and clients with setup guides              |
-| [PulseMCP](https://www.pulsemcp.com)                                        | Directory of MCP servers, clients, use cases, and news              |
-| [MCP Market](https://www.mcpmarket.com)                                     | Directory of MCP servers, clients, and agent skills                 |
-| [MCP Servers](https://mcpservers.org)                                       | Directory of MCP servers                                            |
-| [awesome-mcp-servers](https://github.com/punkpeye/awesome-mcp-servers)      | Curated community list of MCP servers                               |
+  `pyproject.toml`/`uv.lock`, tags the release, and uploads build artifacts. Release notes live on the GitHub Release
 
 ## Usage
 

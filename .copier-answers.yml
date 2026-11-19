@@ -1,0 +1,9 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: v0.7.1
+_src_path: gh:ahcodedev/python-project-template
+description: FastMCP project template
+github_repo: ahcodedev/fastmcp-template
+package_name: example
+project_name: example
+use_docs: true
+use_releases: true
