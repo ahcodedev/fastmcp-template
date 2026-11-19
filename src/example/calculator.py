@@ -4,7 +4,7 @@ from fastmcp.exceptions import ToolError
 mcp = FastMCP(name="calculator")
 
 
-@mcp.tool(name="multiply", description="Multiply two numbers.", tags=set(["math", "arithmetic"]))
+@mcp.tool(name="multiply", description="Multiply two numbers.", tags={"math", "arithmetic"})
 def multiply(a: float, b: float) -> float:
     """Multiply two numbers.
 
@@ -19,7 +19,7 @@ def multiply(a: float, b: float) -> float:
     return a * b
 
 
-@mcp.tool(name="add", description="Add two numbers.", tags=set(["math", "arithmetic"]))
+@mcp.tool(name="add", description="Add two numbers.", tags={"math", "arithmetic"})
 def add(a: float, b: float) -> float:
     """Add two numbers.
 
@@ -37,7 +37,7 @@ def add(a: float, b: float) -> float:
 @mcp.tool(
     name="subtract",
     description="Subtract one number from another.",
-    tags=set(["math", "arithmetic"]),
+    tags={"math", "arithmetic"},
 )
 def subtract(a: float, b: float) -> float:
     """Subtract one number from another.
@@ -53,9 +53,7 @@ def subtract(a: float, b: float) -> float:
     return a - b
 
 
-@mcp.tool(
-    name="divide", description="Divide one number by another.", tags=set(["math", "arithmetic"])
-)
+@mcp.tool(name="divide", description="Divide one number by another.", tags={"math", "arithmetic"})
 def divide(a: float, b: float) -> float:
     """Divide one number by another.
 
