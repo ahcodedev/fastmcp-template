@@ -125,7 +125,10 @@ dmypy.json
 .ruff_cache
 
 # Claude
-.claude/.cc-writes
+.claude/*.local.*
 
 # Dev Container
 .devcontainer/devcontainer-lock.json
+
+# Project-specific
+.claude/.cc-writes
