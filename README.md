@@ -91,22 +91,6 @@ labels; any other repository labels you add are ignored.
 * To release, run the **Release** workflow from the Actions tab. It bumps the version in
   `pyproject.toml`/`uv.lock`, tags the release, and uploads build artifacts. Release notes live on the GitHub Release
 
-## MCP Platforms
-
-Directories, marketplaces, and registries where MCP servers are listed or published.
-
-| Platform                                                                    | Description                                                         |
-| --------------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| [Official MCP Registry](https://registry.modelcontextprotocol.io)           | Official registry for discovering and publishing MCP servers        |
-| [MCP Servers (GitHub)](https://github.com/modelcontextprotocol/servers)     | Reference servers plus links to community-built servers             |
-| [Smithery](https://smithery.ai)                                             | Catalog of MCP servers with managed authentication and credentials  |
-| [Glama](https://glama.ai/mcp/servers)                                       | Large registry of open-source MCP servers, clients, and connectors  |
-| [mcp.so](https://mcp.so)                                                    | Directory of MCP servers and clients with setup guides              |
-| [PulseMCP](https://www.pulsemcp.com)                                        | Directory of MCP servers, clients, use cases, and news              |
-| [MCP Market](https://www.mcpmarket.com)                                     | Directory of MCP servers, clients, and agent skills                 |
-| [MCP Servers](https://mcpservers.org)                                       | Directory of MCP servers                                            |
-| [awesome-mcp-servers](https://github.com/punkpeye/awesome-mcp-servers)      | Curated community list of MCP servers                               |
-
 ## Usage
 
 The MCP server is exposed as the `example` script (`[project.scripts]` in `pyproject.toml`), which
