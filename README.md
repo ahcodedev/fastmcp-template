@@ -2,7 +2,8 @@
 
 [![CI](https://github.com/ahcodedev/fastmcp-template/actions/workflows/python.yml/badge.svg?branch=main)](https://github.com/ahcodedev/fastmcp-template/actions/workflows/python.yml)
 [![Security](https://github.com/ahcodedev/fastmcp-template/actions/workflows/security.yml/badge.svg?branch=main)](https://github.com/ahcodedev/fastmcp-template/actions/workflows/security.yml)
-[![gitleaks](https://img.shields.io/badge/protected%20by-gitleaks-blue)](https://github.com/gitleaks/gitleaks)
+[![betterleaks](https://img.shields.io/badge/protected%20by-betterleaks-blue)](https://github.com/betterleaks/betterleaks)
+[![zizmor](https://img.shields.io/badge/%F0%9F%8C%88-zizmor-white?labelColor=white)](https://zizmor.sh/)
 
 FastMCP project template
 
@@ -29,9 +30,12 @@ manage project configuration and commands
 
 * `just setup` - install Homebrew tools from the `Brewfile` and sync the project
 * `just sync` - sync project dependencies (all groups)
-* `just lint` - type check, lint, format, spellcheck, and lint workflows (actionlint) (applies fixes)
-* `just ci-lint` - run the same checks without modifying files (used in CI)
+* `just lint` - type check, lint, format, spell check (typos), and lint workflows (actionlint), YAML (yamllint),
+  and JSON (jq) (applies fixes)
+* `just ci-lint` - run the same checks without modifying files, except spell check (used in CI)
+* `just spellcheck` - check spelling with typos
 * `just test` - run unit tests
+* `just coverage` - run unit tests with coverage (fails under 98%)
 * `just audit` - check dependencies for known vulnerabilities with pip-audit
 * `just markdownlint` - lint Markdown files with markdownlint-cli2
 * `just docs-build` - build the docs site with Zensical (strict mode, output in `site/`)
@@ -39,23 +43,24 @@ manage project configuration and commands
 * `just dev` - run the server with the MCP Inspector (requires Node / `npx`)
 * `just docs-serve` - serve the docs locally with live reload
 * `just prek` - run pre-commit hooks via prek
-* `just git-leaks` - scan staged changes for secrets with gitleaks
+* `just betterleaks` - scan staged changes for secrets with betterleaks
 * `just zizmor` - audit GitHub Actions workflows for security issues
 * `just set-github-labels` - remove GitHub's non-release default labels, then create or update the release labels
   (for fresh repos, requires `gh auth login`)
+* `just update-template` - pull in the latest changes from the Copier template
 * `uv add {package}` - install a dependency
 
 ## CI and Security
 
-| Workflow              | Runs on                 | Purpose                                      |
-| --------------------- | ----------------------- | -------------------------------------------- |
-| `python.yml`          | push / PR to `main`     | lint, unit tests, docs build, markdownlint   |
-| `security.yml`        | push to `main`, all PRs | zizmor, gitleaks, pip-audit dependency audit |
-| `release-drafter.yml` | push to `main`, PRs     | update the draft release, label PRs          |
-| `release.yml`         | manual                  | publish a release                            |
+| Workflow              | Runs on                 | Purpose                                                 |
+| --------------------- | ----------------------- | ------------------------------------------------------- |
+| `python.yml`          | push / PR to `main`     | lint, spell check, unit tests, docs build, markdownlint |
+| `security.yml`        | push to `main`, all PRs | zizmor, betterleaks, pip-audit dependency audit         |
+| `release-drafter.yml` | push to `main`, PRs     | update the draft release, label PRs                     |
+| `release.yml`         | manual                  | publish a release                                       |
 
 * GitHub Actions are pinned to full commit SHAs, with the version in a trailing comment
-* Dependabot (`.github/dependabot.yml`) checks monthly for updates to GitHub Actions, Python
+* Dependabot (`.github/dependabot.yml`) checks weekly for updates to GitHub Actions, Python
   dependencies, the dev container image, and dev container features. New releases wait 7 days
   before an update is proposed. Dependabot PRs get the `dependencies` label
 
