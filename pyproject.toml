@@ -18,12 +18,12 @@ build-backend = "uv_build"
 [dependency-groups]
 dev = [
     "pip-audit>=2.10.1",
-    "prek>=0.5.10",
+    "prek>=0.5.11",
     "pytest",
     "pytest-asyncio>=1.4.1.post1",
     "pytest-cov",
-    "ruff>=0.17.4",
-    "ty>=0.0.101",
+    "ruff>=0.17.5",
+    "ty>=0.0.107",
 ]
 docs = [
     "mkdocstrings[python]>=1.0.8",
